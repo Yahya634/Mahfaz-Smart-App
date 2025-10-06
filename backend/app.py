@@ -1,4 +1,5 @@
-// ** يجب استبدال هذا الرابط برابط الخادم الذي سيستضيف ملف app.py **
+# ** يجب استبدال هذا الرابط برابط الخادم الذي سيستضيف ملف app.py **
+
 const API_ENDPOINT_URL = 'https://your-api-domain.com/analyze-tajweed'; 
 
 // المعرفات (IDs) التي يجب أن تتطابق مع تصميم Figma
@@ -162,4 +163,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     resetUI();
+
 });
