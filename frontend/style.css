@@ -1,0 +1,403 @@
+/**
+ * ═══════════════════════════════════════════════════════════════════════════
+ * المحفظ الذكي - Smart Quran Recitation Analyzer
+ * Stylesheet for HTML Export
+ * ═══════════════════════════════════════════════════════════════════════════
+ */
+
+/* ═══ Root Variables ═══ */
+:root {
+    /* Colors - الألوان */
+    --color-primary-green: #3d9e6b;
+    --color-primary-dark: #2d7a4f;
+    --color-red: #dc2626;
+    --color-red-dark: #b91c1c;
+    --color-blue: #2563eb;
+    --color-gray-50: #f9fafb;
+    --color-gray-100: #f3f4f6;
+    --color-gray-200: #e5e7eb;
+    --color-gray-300: #d1d5db;
+    --color-gray-600: #4b5563;
+    --color-gray-700: #374151;
+    --color-white: #ffffff;
+    --color-green-50: #f0fdf4;
+    --color-green-200: #bbf7d0;
+    --color-blue-50: #eff6ff;
+    
+    /* Typography - الخطوط */
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --font-size-base: 16px;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 2.5rem;
+    
+    /* Spacing - المسافات */
+    --spacing-1: 0.25rem;
+    --spacing-2: 0.5rem;
+    --spacing-3: 0.75rem;
+    --spacing-4: 1rem;
+    --spacing-6: 1.5rem;
+    --spacing-8: 2rem;
+    
+    /* Border Radius - الحواف المستديرة */
+    --radius: 0.625rem;
+    --radius-lg: 0.5rem;
+    
+    /* Shadows - الظلال */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* ═══ Base Styles ═══ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: var(--font-size-base);
+}
+
+body {
+    font-family: var(--font-family);
+    background: linear-gradient(to bottom right, var(--color-gray-50), var(--color-gray-100));
+    min-height: 100vh;
+    direction: rtl;
+    color: var(--color-gray-700);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══ Container ═══ */
+.container {
+    max-width: 56rem;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: 2rem;
+    }
+}
+
+/* ═══ Header ═══ */
+.header {
+    text-align: center;
+    padding: 1.5rem 0;
+    margin-bottom: 1.5rem;
+}
+
+.main-title {
+    font-size: var(--font-size-2xl);
+    color: var(--color-primary-dark);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: var(--color-gray-600);
+    font-size: var(--font-size-base);
+}
+
+/* ═══ Card Styles ═══ */
+.card {
+    background: var(--color-white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-gray-200);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.card-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-primary-dark);
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+/* ═══ Input Field ═══ */
+.input-field {
+    width: 100%;
+    min-height: 120px;
+    padding: 0.75rem;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-lg);
+    font-size: 1.1rem;
+    line-height: 2;
+    font-family: var(--font-family);
+    resize: none;
+    direction: rtl;
+    text-align: right;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--color-primary-green);
+    box-shadow: 0 0 0 3px rgba(61, 158, 107, 0.1);
+}
+
+.input-field::placeholder {
+    color: var(--color-gray-600);
+    opacity: 0.6;
+}
+
+/* ═══ Button Styles ═══ */
+.btn-primary {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    background-color: var(--color-primary-green);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-primary:disabled {
+    background-color: var(--color-gray-300);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Button States - حالات الزر */
+.btn-primary.recording {
+    background-color: var(--color-red);
+}
+
+.btn-primary.recording:hover {
+    background-color: var(--color-red-dark);
+}
+
+.btn-primary.analyzing {
+    background-color: var(--color-red);
+    cursor: wait;
+}
+
+.btn-outline {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    background-color: transparent;
+    color: var(--color-primary-dark);
+    border: 2px solid var(--color-primary-green);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+    background-color: var(--color-green-50);
+}
+
+/* ═══ Icon ═══ */
+.icon {
+    flex-shrink: 0;
+}
+
+/* ═══ Status Area ═══ */
+.status-area {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background-color: var(--color-gray-100);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+#status-message {
+    color: var(--color-gray-700);
+    font-weight: 500;
+}
+
+/* ═══ Report Card ═══ */
+.report-card {
+    border-color: var(--color-green-200);
+    animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.report-header {
+    background: linear-gradient(to left, var(--color-green-50), var(--color-white));
+}
+
+.report-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: var(--font-size-xl);
+}
+
+.report-content {
+    padding: 2rem 1.5rem;
+}
+
+/* ═══ Report Sections ═══ */
+.report-section {
+    margin-bottom: 1.5rem;
+}
+
+.section-title {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    padding-right: 0.75rem;
+    border-right: 4px solid;
+}
+
+/* Error Section - قسم الخطأ */
+.error-title {
+    color: var(--color-red);
+    border-right-color: var(--color-red);
+}
+
+/* Correction Section - قسم التصحيح */
+.correction-title {
+    color: var(--color-blue);
+    border-right-color: var(--color-blue);
+}
+
+/* Rule Section - قسم القاعدة */
+.rule-title {
+    color: var(--color-primary-dark);
+    border-right-color: var(--color-primary-dark);
+}
+
+.section-text {
+    color: var(--color-gray-700);
+    line-height: 1.8;
+    padding-right: 1.5rem;
+}
+
+.action-section {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-gray-200);
+}
+
+/* ═══ Instructions Card ═══ */
+.instructions-card {
+    background-color: rgba(239, 246, 255, 0.3);
+    border-color: var(--color-gray-200);
+    box-shadow: var(--shadow-md);
+}
+
+.instructions-title {
+    color: var(--color-primary-dark);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.instructions-list {
+    list-style: none;
+    padding: 0;
+}
+
+.instructions-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-gray-600);
+    padding-right: 1rem;
+}
+
+.bullet {
+    color: var(--color-primary-green);
+    font-weight: bold;
+    margin-top: 0.25rem;
+}
+
+/* ═══ Utility Classes ═══ */
+.hidden {
+    display: none !important;
+}
+
+/* ═══ Responsive Design ═══ */
+@media (max-width: 640px) {
+    .main-title {
+        font-size: 2rem;
+    }
+    
+    .card-content {
+        padding: 1rem;
+    }
+    
+    .report-content {
+        padding: 1.5rem 1rem;
+    }
+    
+    .btn-primary {
+        padding: 1.25rem;
+    }
+}
+
+/* ═══ Loading Animation ═══ */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.analyzing .icon {
+    animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ═══ Print Styles ═══ */
+@media print {
+    body {
+        background: white;
+    }
+    
+    .btn-primary,
+    .btn-outline,
+    .instructions-card {
+        display: none;
+    }
+    
+    .card {
+        box-shadow: none;
+        page-break-inside: avoid;
+    }
+}

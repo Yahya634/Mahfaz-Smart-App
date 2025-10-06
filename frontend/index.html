@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحفظ الذكي - Smart Quran Recitation Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="main-title">المحفظ الذكي</h1>
+            <p class="subtitle">مساعدك الذكي لتحسين تلاوة القرآن الكريم</p>
+        </header>
+
+        <!-- Input Section -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">الآية المرجعية للتلاوة</h2>
+            </div>
+            <div class="card-content">
+                <!-- 
+                    ═══════════════════════════════════════════════════════════════
+                    ELEMENT ID: ayah-input (حقل إدخال الآية)
+                    ═══════════════════════════════════════════════════════════════
+                    هذا الحقل يحتوي على النص المرجعي الذي سيتم مقارنته بالتلاوة
+                    القيمة ترسل إلى API مع الملف الصوتي
+                -->
+                <textarea 
+                    id="ayah-input" 
+                    class="input-field"
+                    placeholder="ادخل الآية التي ستقرأها هنا (لضمان دقة التحليل)"
+                    rows="5"
+                ></textarea>
+
+                <!-- 
+                    ═══════════════════════════════════════════════════════════════
+                    ELEMENT ID: analyze-button (زر التسجيل والتحليل)
+                    ═══════════════════════════════════════════════════════════════
+                    
+                    عند النقر على هذا الزر:
+                    
+                    1. التسجيل (حالة خضراء 🟢):
+                       - يبدأ التسجيل الصوتي
+                       - لون الزر يتحول إلى الأخضر
+                       - عرض رسالة "جاري التسجيل..."
+                    
+                    2. الإيقاف والتحليل (حالة حمراء 🔴):
+                       - إيقاف التسجيل
+                       - لون الزر يتحول إلى الأحمر
+                       - إرسال الصوت + النص إلى API
+                       - عرض رسالة "جاري التحليل..."
+                    
+                    3. FormData المرسل:
+                       - audio: ملف الصوت (webm format)
+                       - verse: النص من #ayah-input
+                -->
+                <button id="analyze-button" class="btn-primary" disabled>
+                    <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                        <line x1="12" y1="19" x2="12" y2="22"/>
+                    </svg>
+                    <span id="button-text">ابدأ التسجيل والتحليل</span>
+                </button>
+
+                <!-- 
+                    ═══════════════════════════════════════════════════════════════
+                    ELEMENT ID: status-area (منطقة عرض الحالة)
+                    ═══════════════════════════════════════════════════════════════
+                    تعرض الحالة الحالية للتطبيق:
+                    - 🟢 جاري التسجيل...
+                    - 🔴 جاري التحليل...
+                    - ✅ اكتمل التحليل
+                -->
+                <div id="status-area" class="status-area hidden">
+                    <p id="status-message"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 
+            ═══════════════════════════════════════════════════════════════════════
+            SECTION: Results Display - منطقة عرض النتائج
+            ELEMENT ID: report-area (لوحة التقرير)
+            ═══════════════════════════════════════════════════════════════════════
+            
+            هذه المنطقة تعرض نتيجة تحليل Gemini API
+            
+            البيانات المعروضة من الاستجابة:
+            {
+              error: "وصف الخطأ في التلاوة",
+              correction: "كيفية تصحيح الخطأ بشكل عملي",
+              rule: "القاعدة التجويدية المتعلقة"
+            }
+            
+            التقسيم الثلاثي:
+            1. الخطأ (باللون الأحمر)
+            2. التصحيح العملي (باللون الأزرق)
+            3. القاعدة التجويدية (باللون الأخضر)
+        -->
+        <div id="report-area" class="card report-card hidden">
+            <div class="card-header report-header">
+                <h2 class="card-title report-title">
+                    <span>📊</span>
+                    <span>تقرير المحفظ الذكي</span>
+                </h2>
+            </div>
+            <div class="card-content report-content">
+                <!-- 
+                    ═══════════════════════════════════════════════════════════════
+                    SECTION 1: Error Description - وصف الخطأ
+                    ═══════════════════════════════════════════════════════════════
+                    يعرض الخطأ الذي تم اكتشافه في التلاوة
+                    المصدر: analysisResult.error من API Response
+                -->
+                <div class="report-section">
+                    <h3 class="section-title error-title">1. الخطأ:</h3>
+                    <p id="error-text" class="section-text"></p>
+                </div>
+
+                <!-- 
+                    ═══════════════════════════════════════════════════════════════
+                    SECTION 2: Practical Correction - التصحيح العملي
+                    ═══════════════════════════════════════════════════════════════
+                    يعرض الإرشادات العملية لتصحيح الخطأ
+                    المصدر: analysisResult.correction من API Response
+                -->
+                <div class="report-section">
+                    <h3 class="section-title correction-title">2. التصحيح العملي:</h3>
+                    <p id="correction-text" class="section-text"></p>
+                </div>
+
+                <!-- 
+                    ═══════════════════════════════════════════════════════════════
+                    SECTION 3: Tajweed Rule - القاعدة التجويدية
+                    ═══════════════════════════════════════════════════════════════
+                    يعرض القاعدة التجويدية المتعلقة بالخطأ
+                    المصدر: analysisResult.rule من API Response
+                -->
+                <div class="report-section">
+                    <h3 class="section-title rule-title">3. القاعدة التجويدية:</h3>
+                    <p id="rule-text" class="section-text"></p>
+                </div>
+
+                <!-- Action Button - زر تسجيل جديد -->
+                <div class="action-section">
+                    <button id="new-recording-btn" class="btn-outline">تسجيل جديد</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions Card -->
+        <div id="instructions-card" class="card instructions-card">
+            <div class="card-content">
+                <h3 class="instructions-title">كيفية الاستخدام:</h3>
+                <ul class="instructions-list">
+                    <li>
+                        <span class="bullet">•</span>
+                        <span>اكتب الآية التي تريد تلاوتها في المربع أعلاه</span>
+                    </li>
+                    <li>
+                        <span class="bullet">•</span>
+                        <span>اضغط على زر "ابدأ التسجيل والتحليل"</span>
+                    </li>
+                    <li>
+                        <span class="bullet">•</span>
+                        <span>اقرأ الآية بوضوح أثناء التسجيل</span>
+                    </li>
+                    <li>
+                        <span class="bullet">•</span>
+                        <span>انتظر التحليل واستعرض التقرير المفصل</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
